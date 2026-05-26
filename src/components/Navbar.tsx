@@ -1,157 +1,100 @@
 import { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 
-interface NavbarProps {
-  isDark: boolean;
-  toggleTheme: () => void;
-}
-
-export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Efek untuk mendeteksi ketika halaman di-scroll agar navbar berubah warna
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
+  const menuItems = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-strong shadow-card' : 'bg-transparent'
+        isScrolled
+          ? 'py-4 bg-slate-950/80 backdrop-blur-md border-b border-emerald-500/10 shadow-lg shadow-emerald-950/5'
+          : 'py-6 bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <motion.a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('#home');
-            }}
-            className="font-display text-xl md:text-2xl font-bold text-gradient cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-          >
-            &lt;Dev /&gt;
-          </motion.a>
+      <div className="container mx-auto px-6 flex items-center justify-between">
+        
+        {/* LOGO BARU: Menggantikan <Dev /> */}
+        <a 
+          href="#home" 
+          className="font-display text-2xl font-extrabold tracking-tight text-white group"
+        >
+          {/* Warna teks utama putih, warna titik menggunakan hijau kemilau */}
+          Falyas<span className="text-lime-400 group-hover:text-emerald-500 transition-colors">.</span>
+        </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(item.href);
-                }}
-                className="text-muted-foreground hover:text-foreground transition-colors font-medium cursor-pointer"
-                whileHover={{ y: -2 }}
-              >
-                {item.label}
-              </motion.a>
-            ))}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-full"
+        {/* Menu Navigasi Layar Lebar (Desktop) */}
+        <div className="hidden md:flex items-center gap-8">
+          {menuItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="text-sm font-medium text-slate-300 hover:text-lime-400 transition-colors duration-200 relative group py-1"
             >
-              <AnimatePresence mode="wait">
-                {isDark ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                  >
-                    <Sun className="h-5 w-5" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                  >
-                    <Moon className="h-5 w-5" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-full"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
+              {item.name}
+              {/* Garis bawah interaktif saat menu di-hover */}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-500 to-lime-400 transition-all duration-300 group-hover:w-full" />
+            </a>
+          ))}
         </div>
+
+        {/* Tombol Menu Layar Kecil (Mobile Burger Button) */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-2 md:hidden text-slate-300 hover:text-lime-400 focus:outline-none"
+        >
+          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Menu Navigasi Dropdown Layar Kecil (Mobile Menu) */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-strong border-t border-border"
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-slate-950/95 backdrop-blur-lg border-b border-emerald-500/10 overflow-hidden"
           >
-            <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              {navItems.map((item) => (
+            <div className="flex flex-col px-6 py-4 space-y-3">
+              {menuItems.map((item) => (
                 <a
-                  key={item.label}
+                  key={item.name}
                   href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(item.href);
-                  }}
-                  className="text-muted-foreground hover:text-foreground transition-colors font-medium py-2"
+                  onClick={() => setIsOpen(false)} // Menutup otomatis saat menu diklik
+                  className="text-base font-medium text-slate-300 hover:text-lime-400 py-2 block border-b border-slate-900 last:border-0"
                 >
-                  {item.label}
+                  {item.name}
                 </a>
               ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }

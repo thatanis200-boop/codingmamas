@@ -1,155 +1,113 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Play } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
-const projects = [
-  {
-    title: 'E-Commerce Platform',
-    description: 'Platform e-commerce modern dengan fitur lengkap termasuk payment gateway, inventory management, dan analytics dashboard.',
-    tags: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
-    image: '🛒',
-    color: 'from-blue-500/20 to-cyan-500/20',
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'Learning Management System',
-    description: 'Platform pembelajaran online dengan video streaming, quiz interaktif, dan progress tracking.',
-    tags: ['Next.js', 'TypeScript', 'MongoDB', 'WebRTC'],
-    image: '📚',
-    color: 'from-purple-500/20 to-pink-500/20',
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'Social Media Dashboard',
-    description: 'Dashboard analytics untuk social media dengan real-time data visualization dan reporting.',
-    tags: ['React', 'D3.js', 'Firebase', 'Tailwind'],
-    image: '📊',
-    color: 'from-orange-500/20 to-red-500/20',
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'AI Content Generator',
-    description: 'Tool untuk generate konten menggunakan AI dengan integrasi berbagai model language.',
-    tags: ['Python', 'FastAPI', 'OpenAI', 'React'],
-    image: '🤖',
-    color: 'from-green-500/20 to-teal-500/20',
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'Video Editing Tutorial',
-    description: 'Seri tutorial video editing dengan 100+ episode dan 10k+ subscribers.',
-    tags: ['Premiere Pro', 'After Effects', 'YouTube'],
-    image: '🎬',
-    color: 'from-red-500/20 to-orange-500/20',
-    isContent: true,
-    youtube: '#',
-  },
-  {
-    title: 'Coding Tips & Tricks',
-    description: 'Konten tips programming dan best practices untuk developer Indonesia.',
-    tags: ['Instagram', 'TikTok', 'YouTube Shorts'],
-    image: '💡',
-    color: 'from-cyan-500/20 to-blue-500/20',
-    isContent: true,
-    youtube: '#',
-  },
-];
+import { Github, ExternalLink } from 'lucide-react';
 
 export default function ProjectsSection() {
-  return (
-    <section id="projects" className="py-20 md:py-32 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-medium mb-2 block">Portfolio</span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            Projects &amp; Karya
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
+  // Array data proyek menggunakan gambar kustom baru Anda
+  const projects = [
+    {
+      title: 'GELAS KACA YANG MENANBAHKAN KESAN MEWAH',
+      description: 'Platform e-commerce modern dengan fitur lengkap termasuk payment gateway, inventory management, dan dashboard analitik.',
+      image: '/prkd-1.jpg',
+      tags: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
+      githubUrl: 'https://github.com',
+      demoUrl: 'https://demo.com',
+    },
+    {
+      title: 'AIR BOTOL MURNI',
+      description: 'Platform pembelajaran online dengan video streaming, quiz interaktif, dan progress tracking untuk siswa dan pengajar.',
+      image: '/prkd-2.jpg',
+      tags: ['Next.js', 'TypeScript', 'MongoDB', 'WebRTC'],
+      githubUrl: 'https://github.com',
+      demoUrl: 'https://demo.com',
+    },
+    {
+      title: 'TUMBLER BIRU ELEKTRIK',
+      description: 'Dashboard analytics untuk manajemen dan pemantauan media sosial dengan real-time data visualization dan automated reporting.',
+      image: '/prkd-3.jpg',
+      tags: ['React', 'D3.js', 'Firebase', 'Tailwind'],
+      githubUrl: 'https://github.com',
+      demoUrl: 'https://demo.com',
+    },
+  ];
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+  return (
+    <section id="projects" className="py-20 bg-amber-400">
+      <div className="container mx-auto px-4">
+        
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2 text-slate-950">
+            Projects Terpilih
+          </h2>
+          <div className="w-16 h-1.5 bg-emerald-600 mx-auto rounded-full shadow-sm" />
+        </div>
+
+        {/* Grid Cards Proyek */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
-              key={project.title}
+              key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
+              className="bg-white rounded-2xl overflow-hidden border border-amber-500/20 shadow-xl flex flex-col group hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="h-full p-6 glass rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-2">
-                <div className={`aspect-video rounded-xl mb-4 flex items-center justify-center bg-gradient-to-br ${project.color}`}>
-                  <span className="text-6xl">{project.image}</span>
-                </div>
+              {/* Box Gambar Proyek */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 border-b border-slate-100">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              {/* Detail Konten Proyek */}
+              <div className="p-6 flex flex-col flex-grow space-y-4">
+                <h3 className="font-display text-xl font-bold text-slate-900">
+                  {project.title}
+                </h3>
                 
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    {project.isContent && (
-                      <span className="px-2 py-0.5 text-xs rounded-full bg-primary/10 text-primary font-medium">
-                        Content
-                      </span>
-                    )}
-                    <h3 className="font-display text-lg font-bold group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                  </div>
-                  
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 text-xs rounded-md bg-secondary text-secondary-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-2 pt-2">
-                    {project.github && (
-                      <Button variant="outline" size="sm" className="rounded-full" asChild>
-                        <a href={project.github}>
-                          <Github className="h-4 w-4 mr-1" />
-                          Code
-                        </a>
-                      </Button>
-                    )}
-                    {project.demo && (
-                      <Button size="sm" className="rounded-full" asChild>
-                        <a href={project.demo}>
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          Demo
-                        </a>
-                      </Button>
-                    )}
-                    {project.youtube && (
-                      <Button size="sm" className="rounded-full" asChild>
-                        <a href={project.youtube}>
-                          <Play className="h-4 w-4 mr-1" />
-                          Watch
-                        </a>
-                      </Button>
-                    )}
-                  </div>
+                <p className="text-sm text-slate-600 leading-relaxed flex-grow">
+                  {project.description}
+                </p>
+
+                {/* Tech Stack / Tags */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-semibold border border-slate-200/50"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Tombol Aksi (Code & Demo) */}
+                <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white transition-all"
+                  >
+                    <Github className="h-3.5 w-3.5" /> Code
+                  </a>
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-600/20 transition-all"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" /> Demo
+                  </a>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );

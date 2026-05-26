@@ -19,19 +19,19 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'hello@developer.com',
-    href: 'mailto:hello@developer.com',
+    value: 'thatanis200@gmail.com',
+    href: 'thatanis200@gmail.com',
   },
   {
     icon: Phone,
     label: 'Telepon',
-    value: '+62 812 3456 7890',
-    href: 'tel:+6281234567890',
+    value: '+62 853 6131 4576',
+    href: 'tel:+6285361314576',
   },
   {
     icon: MapPin,
     label: 'Lokasi',
-    value: 'Jakarta, Indonesia',
+    value: 'Leung Bata, Banda Aceh, Indonesia',
     href: '#',
   },
 ];
